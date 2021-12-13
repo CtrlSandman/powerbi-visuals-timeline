@@ -260,32 +260,43 @@
         "cells": {
             "displayName": "Cells",
             "displayNameKey": "Visual_Cells",
-            "properties": {
-                "fillSelected": {
-                    "displayName": "Selected cell color",
-                    "displayNameKey": "Visual_Cell_SelectedColor",
-                    "type": {
-                        "fill": {
-                            "solid": {
-                                "color": true
-                            }
-                        }
-                    }
-                },
-                "fillUnselected": {
-                    "displayName": "Unselected cell color",
-                    "displayNameKey": "Visual_Cell_UnselectedColor",
-                    "type": {
-                        "fill": {
-                            "solid": {
-                                "color": {
-                                    "nullable": true
-                                }
-                            }
-                        }
-                    }
+          "properties": {
+            "fillSelected": {
+              "displayName": "Selected cell color",
+              "displayNameKey": "Visual_Cell_SelectedColor",
+              "type": {
+                "fill": {
+                  "solid": {
+                    "color": true
+                  }
                 }
+              }
+            },
+            "fillSelected2": {
+              "displayName": "Selected cell color2",
+              "displayNameKey": "Visual_Cell_SelectedColor2",
+              "type": {
+                "fill": {
+                  "solid": {
+                    "color": true
+                  }
+                }
+              }
+            },
+            "fillUnselected": {
+              "displayName": "Unselected cell color",
+              "displayNameKey": "Visual_Cell_UnselectedColor",
+              "type": {
+                "fill": {
+                  "solid": {
+                    "color": {
+                      "nullable": true
+                    }
+                  }
+                }
+              }
             }
+          }
         },
         "granularity": {
             "displayName": "Granularity",

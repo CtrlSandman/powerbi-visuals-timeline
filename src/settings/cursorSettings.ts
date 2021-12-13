@@ -25,5 +25,5 @@
  */
 
 export class CursorSettings {
-    public color: string = "#808080";
+    public color: string = "#000000";
 }

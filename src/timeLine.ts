@@ -106,6 +106,8 @@ interface IAdjustedFilterDatePeriod {
     adaptedDataEndDate: Date;
 }
 
+import Gradient from "javascript-color-gradient";
+
 export class Timeline implements powerbiVisualsApi.extensibility.visual.IVisual {
     public static SET_VALID_CALENDAR_SETTINGS(calendarSettings: CalendarSettings): void {
         const defaultSettings: Settings = <Settings>(Settings.getDefault());
@@ -322,8 +324,8 @@ export class Timeline implements powerbiVisualsApi.extensibility.visual.IVisual 
         LeftMargin: 15,
         LegendHeight: 50,
         LegendHeightRange: 20,
-        MaxCellHeight: 60,
-        MinCellHeight: 20,
+        MaxCellHeight: 10,
+        MinCellHeight: 10,
         MinCellWidth: 40,
         PeriodSlicerRectHeight: 23,
         PeriodSlicerRectWidth: 15,
@@ -597,7 +599,7 @@ export class Timeline implements powerbiVisualsApi.extensibility.visual.IVisual 
 
         this.timelineProperties = {
             bottomMargin: Timeline.TimelineMargins.BottomMargin,
-            cellHeight: Timeline.TimelineMargins.CellHeight,
+            cellHeight: 10,//Timeline.TimelineMargins.CellHeight,
             cellWidth: Timeline.TimelineMargins.CellWidth,
             cellsYPosition: Timeline.TimelineMargins.TopMargin * Timeline.CellsYPositionFactor + Timeline.CellsYPositionOffset,
             elementWidth: Timeline.TimelineMargins.ElementWidth,
@@ -774,6 +776,13 @@ export class Timeline implements powerbiVisualsApi.extensibility.visual.IVisual 
 
         const cellsSettings: CellsSettings = visSettings.cells;
 
+        const colorGradient = new Gradient();
+
+        const color1 = cellsSettings.fillSelected;
+        const color2 = cellsSettings.fillSelected2;
+
+        colorGradient.setGradient(color1, color2);
+
         let singleCaseDone: boolean = false;
 
         cellSelection
@@ -787,7 +796,8 @@ export class Timeline implements powerbiVisualsApi.extensibility.visual.IVisual 
                 }
 
                 return isSelected
-                    ? cellsSettings.fillSelected
+                    ? colorGradient.getColor(index)
+                    //? cellsSettings.fillSelected
                     : (cellsSettings.fillUnselected || Utils.DefaultCellColor);
             })
             .style("stroke", (dataPoint: ITimelineDataPoint) => {
@@ -866,15 +876,26 @@ export class Timeline implements powerbiVisualsApi.extensibility.visual.IVisual 
             })
             .attr("d", d3Arc<ICursorDataPoint>()
                 .innerRadius(0)
-                .outerRadius(cellHeight / Timeline.CellHeightDivider)
-                .startAngle((cursorDataPoint: ICursorDataPoint) => {
-                    return cursorDataPoint.cursorIndex * Math.PI + Math.PI;
-                })
-                .endAngle((cursorDataPoint: ICursorDataPoint) => {
-                    return cursorDataPoint.cursorIndex * Math.PI + 2 * Math.PI;
-                }),
+                .outerRadius(cellHeight + 2)
+                .startAngle(0)
+                .endAngle(2 * Math.PI),
             )
-            .style("fill", this.settings.cursor.color)
+            //.style("fill", this.settings.cursor.color)
+            .style("fill", (cursorDataPoint: ICursorDataPoint) => {
+
+                if (cursorDataPoint.cursorIndex == 0) {
+
+                    return "#a0ca47"
+
+                } else {
+
+                    return "#00a965"
+
+                }
+
+            })
+            .attr('stroke', "black")
+            .style("stroke-width", 1)
             .call(this.cursorDragBehavior);
     }
 
@@ -1346,10 +1367,10 @@ export class Timeline implements powerbiVisualsApi.extensibility.visual.IVisual 
         const mainSvgWrapperHeight: number = mainSvgHeight + Timeline.TimelineMargins.FramePadding;
 
         this.mainSvgWrapperSelection
-            .style("height", pixelConverter.toString(Math.max(
-                Timeline.MinSizeOfViewport,
-                mainSvgWrapperHeight,
-            )))
+            .style("height", 79)//pixelConverter.toString(Math.max(
+                //Timeline.MinSizeOfViewport,
+                //mainSvgWrapperHeight,
+            //)))
             .style("width",
                 this.svgWidth < options.viewport.width
                     ? "100%"
@@ -1359,10 +1380,10 @@ export class Timeline implements powerbiVisualsApi.extensibility.visual.IVisual 
                     )));
 
         this.mainSvgSelection
-            .attr("height", pixelConverter.toString(Math.max(
-                Timeline.MinSizeOfViewport,
-                mainSvgHeight,
-            )))
+            .attr("height", 79) //pixelConverter.toString(Math.max(
+                //Timeline.MinSizeOfViewport,
+                //mainSvgHeight,
+            //)))
             .attr("width", "100%");
 
         const fixedTranslateString: string = svgManipulation.translate(

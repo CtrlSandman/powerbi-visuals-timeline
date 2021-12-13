@@ -1,8 +1,8 @@
 {
   "visual": {
     "name": "Timeline",
-    "displayName": "Timeline 2.4.0",
-    "guid": "Timeline1447991079100",
+    "displayName": "Timeline 2.4.1",
+    "guid": "4FB925FF-7DD2-4DC1-B2E4-452578C6947D",
     "visualClassName": "Timeline",
     "version": "2.4.0",
     "description": "Timeline slicer is a graphical date range selector used as a filtering component in the report canvas",
@@ -11,8 +11,8 @@
   },
   "apiVersion": "3.5.0",
   "author": {
-    "name": "Microsoft",
-    "email": "pbicvsupport@microsoft.com"
+    "name": "Yevgen",
+    "email": "ievgen.pieskov@quartesian.com"
   },
   "assets": {
     "icon": "assets/icon.png"
